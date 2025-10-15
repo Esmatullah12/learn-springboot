@@ -1,10 +1,18 @@
 package com.library.library.springboot.model;
 
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
 public class User {
+
     private int id;
+
+    @Size(min = 3, message = "the min are 3 charchters for name")
     private String name;
+
+    @Past(message = "Birth date should be in past")
     private LocalDate DOB;
 
     public User(int id, String name, LocalDate DOB) {

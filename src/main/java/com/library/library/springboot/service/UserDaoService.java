@@ -33,7 +33,8 @@ public class UserDaoService {
         return user;
     }
 
-    public  void deleteUser(int id){
-        Predicate<? super User> predicate =user -> user.getId().equals(id);
+    public  void deleteUserById(int id){
+        Predicate<? super User> predicate = u -> u.getId() == id;
+        users.removeIf(predicate);
     }
 }

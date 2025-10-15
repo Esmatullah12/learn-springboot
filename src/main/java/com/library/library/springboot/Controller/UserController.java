@@ -3,6 +3,7 @@ package com.library.library.springboot.Controller;
 import com.library.library.springboot.model.User;
 import com.library.library.springboot.service.UserDaoService;
 import com.library.library.springboot.exception.UserNotFoundException;
+import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<User> createUser(@RequestBody User user){
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user){
         User saveUser = userDaoService.createUser(user);
         URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}").buildAndExpand(saveUser.getId()).toUri();
         return ResponseEntity.created(location).build();
@@ -42,6 +43,6 @@ public class UserController {
 
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable int id){
-        userDaoService.deleteUser(id);
+        userDaoService.deleteUserById(id);
     }
 }
