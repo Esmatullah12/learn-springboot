@@ -1,6 +1,7 @@
 package com.library.library.springboot.service;
 
 import com.library.library.springboot.model.User;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;

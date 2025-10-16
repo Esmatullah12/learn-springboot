@@ -1,16 +1,23 @@
 package com.library.library.springboot.Controller;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 import com.library.library.springboot.model.User;
 import com.library.library.springboot.service.UserDaoService;
 import com.library.library.springboot.exception.UserNotFoundException;
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.swing.text.html.parser.Entity;
 import java.net.URI;
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 public class UserController {
@@ -26,12 +33,17 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
-    public User user(@PathVariable int id){
+    public EntityModel<User> user(@PathVariable int id){
         User user = userDaoService.getUser(id);
         if (user == null){
             throw new UserNotFoundException("id: "+id);
         }
-        return userDaoService.getUser(id);
+        EntityModel<User> entityModel = EntityModel.of(user);
+
+        WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).users());
+        entityModel.add(link.withRel("all-users"));
+
+        return entityModel;
     }
 
     @PostMapping("/users")
