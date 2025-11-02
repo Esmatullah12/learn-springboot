@@ -1,19 +1,12 @@
 package com.library.library.springboot.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
-import javax.annotation.processing.Generated;
 import java.time.LocalDate;
 
-@Entity(name = "user_details")
 public class User {
-    @Id
-    @GeneratedValue
+
     private int id;
 
     @Size(min = 3, message = "the min are 3 charchters for name")
@@ -27,8 +20,6 @@ public class User {
         this.name = name;
         this.DOB = DOB;
     }
-
-    protected User() {}
 
     public int getId() {
         return id;
